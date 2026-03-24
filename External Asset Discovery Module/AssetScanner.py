@@ -173,8 +173,9 @@ class IntegratedScanner:
         return self.final_report
 
 
+# 실행
 if __name__ == "__main__":
-    DOMAIN = "vulnweb.com"
+    DOMAIN = "vulnweb.com"  # 타겟 도메인
     scanner = IntegratedScanner(DOMAIN)
     final_results = scanner.start_full_scan()
 
