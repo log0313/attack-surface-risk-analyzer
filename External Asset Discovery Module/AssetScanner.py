@@ -2,8 +2,6 @@ import subprocess
 import json
 import re
 import xml.etree.ElementTree as ET
-import tempfile
-import os
 from datetime import datetime
 
 
