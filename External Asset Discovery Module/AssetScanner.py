@@ -2,6 +2,8 @@ import subprocess
 import json
 import re
 import xml.etree.ElementTree as ET
+import tempfile
+import os
 from datetime import datetime
 
 
@@ -15,12 +17,19 @@ class IntegratedScanner:
             "subdomains": [],
         }
 
+
     def _run_command(self, cmd):
         """외부 명령어를 실행하고 결과를 반환"""
         try:
             # 윈도우 환경에서 도구들이 설치된 PATH를 인식하지 못할 경우를 대비
             # 결과물에서 불필요한 공백 제거
-            result = subprocess.check_output(cmd, shell=True, stderr=subprocess.STDOUT)
+            # stdin=subprocess.DEVNULL 추가: 도구들이 키보드 입력을 기다리며 멈추는 현상 방지
+            result = subprocess.check_output(
+                cmd,
+                shell=True,
+                stderr=subprocess.STDOUT,
+                stdin=subprocess.DEVNULL  # <--- PyCharm 개발환경용 코드
+            )
             return result.decode("utf-8", errors="ignore").strip()
         except Exception as e:
             # 에러 발생 시 로그 출력 후 빈 문자열 반환
@@ -99,12 +108,14 @@ class IntegratedScanner:
         version = n_info["version"] or "*"
         return f"cpe:2.3:a:{vendor}:{product}:{version}:*:*:*:*:*:*:*"
 
+
     def scan_target(self, target_host):
         """개별 호스트 상세 스캔"""
         print(f"\n>>> Scanning Target: {target_host}")
         asset_data = {"host": target_host, "open_ports": []}
 
         # 1. Naabu: 포트 스캔
+        print("Naabu scanning ports...")
         naabu_out = self._run_command(f"naabu -host {target_host} -silent")
         ports = [
             line.split(":")[-1]
@@ -117,17 +128,19 @@ class IntegratedScanner:
             return asset_data
 
         # 2. Nmap: 서비스 탐지
+        print("Nmap scanning services...")
         port_arg = ",".join(ports)
         nmap_xml = self._run_command(f"nmap -sV -p{port_arg} {target_host} -oX -")
         nmap_data = self._parse_nmap_xml(nmap_xml)
 
-        # 3. HTTPX: 기술 스택 분석 (성공률을 위해 -u 대신 URL 직접 생성 시도 가능)
-        # 포트별로 더 상세히 찌르기 위해 옵션 보강
-        httpx_out = self._run_command(
-            f"httpx -u {target_host} -silent -json -td -title -status-code"
-        )
+        # 3. HTTPX: 웹 기술 스택 분석
+        print("HTTPX scanning technologies...")
 
+        # -p 옵션으로 열린 포트만 타겟팅
+        httpx_cmd = f"httpx -u {target_host} -p {port_arg} -silent -json -td -title -status-code -t 50 -timeout 10 -retries 0"
+        httpx_out = self._run_command(httpx_cmd)
         httpx_map = {}
+
         for line in httpx_out.split("\n"):
             if line.strip().startswith("{"):
                 try:
@@ -184,4 +197,3 @@ if __name__ == "__main__":
         json.dump(final_results, f, indent=4, ensure_ascii=False)
 
     print(f"\n[*] All scans complete. Report saved to '{filename}'")
-6
