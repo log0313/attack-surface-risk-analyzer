@@ -13,3 +13,7 @@
 # sync_threat_intel.py
 - EPSS와 KEV를 다운로드해 db에 업데이트하는 파일입니다. nvd_to_opensearch.py에서 미리 만들어둔 빈 필드를 사용합니다.
 - 별도의 파일을 사용하지 않으며, db만 정상적으로 동작하고 있으면 실행 가능합니다.
+
+# test_runner.py
+- 테스트 용도로 만든 파일입니다. AssetScanner로 확인한 포트와 기술 스택의 정보를 토대로 DB에 적재된 cpe와 매칭한 결과를 보여줍니다.
+- Opensearch에서 검색한 데이터를 가지고 cpe_matcher를 사용해 유사도가 높은 CVE를 출력합니다. 검색어와 실제 불러온 CVE의 cpe를 비교할 수 있게 EPSS score 옆에 DB의 cpe를 표기하도록 했습니다.
