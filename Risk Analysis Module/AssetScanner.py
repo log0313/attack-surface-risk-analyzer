@@ -12,7 +12,7 @@ class IntegratedScanner:
         url = f"http://{target}:{port}"
         h_info = {"tech": [], "status_code": 0}
 
-        # 네가 원하는 결과 포맷 매핑
+        # 원하는 결과 포맷 매핑
         target_map = {
             "WSO2": "WSO2:api_manager:*",
             "Oracle": "oracle:identity_management_suite:12.2.1.4.0",
