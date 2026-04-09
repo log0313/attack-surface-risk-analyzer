@@ -1,10 +1,13 @@
+### 📂 Directory Structure
+
+```text
 .
 ├── conf/                   # Nginx 설정 파일 (Appliance 지문)
 │   ├── appliance_mock.conf
 │   └── ...
 ├── docker-compose.yml       # 시뮬레이션 환경 정의
 ├── AssetScanner.py          # 자산 식별 스캐너 (Requests 기반)
-
+└── README.md
 이렇게 모두 같은 root에 두고 실행. request 다운로드 하고 Docker 실행후 터미널에서 
 - docker-compose up -d
 환경 실행 후 scanner 실행 하면 json 파일이 정상적으로 나옴. 제대로 나왔을 때의 결과가 scan_report_simulated_real.json과 똑같이 나와야 함.
