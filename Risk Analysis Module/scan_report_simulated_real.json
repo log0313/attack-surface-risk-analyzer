@@ -1,0 +1,39 @@
+{
+    "root_domain": "localhost",
+    "scan_time": "2026-04-09T21:56:45.638005",
+    "subdomains": [
+        {
+            "host": "localhost",
+            "open_ports": [
+                {
+                    "port": 8080,
+                    "service": "http",
+                    "technologies": [
+                        "WSO2:api_manager:*",
+                        "oracle:identity_management_suite:12.2.1.4.0",
+                        "apache:log4j-core:2.14.1"
+                    ]
+                },
+                {
+                    "port": 8081,
+                    "service": "http",
+                    "technologies": [
+                        "Apache:struts:2.3.15.1",
+                        "Fortra:goanywhere_mft:*",
+                        "Progress:moveit_transfer:*"
+                    ]
+                },
+                {
+                    "port": 8443,
+                    "service": "https",
+                    "technologies": [
+                        "Paloaltonetworks:pan-os:10.2.0",
+                        "Citrix:netscaler_adc:*",
+                        "Fortinet:fortios:*",
+                        "F5:big-ip:*"
+                    ]
+                }
+            ]
+        }
+    ]
+}
