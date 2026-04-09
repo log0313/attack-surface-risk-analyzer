@@ -1,0 +1,22 @@
+#version: '3.8'
+services:
+  # 8080: WSO2, Oracle, Log4j 시뮬레이션
+  api-gateway:
+    image: nginx:alpine
+    ports: ["8080:80"]
+    volumes:
+      - ./api_gateway.conf:/etc/nginx/conf.d/default.conf
+
+  # 8081: Struts2, GoAnywhere, MOVEit 시뮬레이션
+  legacy-app:
+    image: nginx:alpine
+    ports: ["8081:80"]
+    volumes:
+      - ./legacy_app.conf:/etc/nginx/conf.d/default.conf
+
+  # 8443: Palo Alto, Citrix, Fortinet 시뮬레이션
+  appliances:
+    image: nginx:alpine
+    ports: ["8443:80"]
+    volumes:
+      - ./appliance_mock.conf:/etc/nginx/conf.d/default.conf
