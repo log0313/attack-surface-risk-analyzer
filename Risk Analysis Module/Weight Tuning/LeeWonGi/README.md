@@ -2,6 +2,7 @@ cwe 추가를 위해 수정한 nvd_to_opensearch.py 첨부.
 
 ## 1. 가중치 산정 논리 (Scoring Methodology)
 본 모델은 다음과 같은 수식을 통해 리스크 점수를 산출함.
+
 $$
 Score = (CVSS \times W_{1}) + (KEV_{weight} \times W_{2}) + (CWE_{bank} \times W_{3}) + (EPSS \times 100 \times W_{4})
 $$
