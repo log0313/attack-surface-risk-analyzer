@@ -168,7 +168,7 @@ class BankRiskOptimizer:
         critical_ids = set(critical_group["cve_id"])
 
         # 2. 주의(WARNING): 설정된 경계선(dynamic_cutoff) 내에서 위험군 제외
-        # 이제 dynamic_cutoff가 최소 50이므로, 위험 15개를 빼도 약 35개의 후보가 생김
+        # dynamic_cutoff가 최소 50이므로, 위험 15개를 빼도 약 35개의 후보가 생김
         analysis_boundary = df_real.head(dynamic_cutoff)
         warning_candidates = analysis_boundary[
             ~analysis_boundary["cve_id"].isin(critical_ids)
@@ -254,6 +254,7 @@ class BankRiskOptimizer:
                 print(f"[{i:4d}] Alerts: {val_alerts:4d} | Weights: [{w_str}]")
 
         print("\n최종 최적화 가중치 산정 완료.")
+        print("\nfinal_optimization_clean.png 저장 완료.")
         self.plot_results(pd.DataFrame(history))
 
         choice = input(
