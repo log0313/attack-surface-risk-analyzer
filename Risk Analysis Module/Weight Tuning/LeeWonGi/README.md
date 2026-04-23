@@ -1,4 +1,4 @@
-<img width="483" height="578" alt="image" src="https://github.com/user-attachments/assets/7eff95b6-fbd3-4da2-8bbd-6067a2812a2d" />cwe 추가를 위해 수정한 nvd_to_opensearch.py 첨부.
+cwe 추가를 위해 수정한 nvd_to_opensearch.py 첨부.
 
 ## 1. 가중치 산정 논리 (Scoring Methodology)
 본 모델은 다음과 같은 수식을 통해 리스크 점수를 산출함.
