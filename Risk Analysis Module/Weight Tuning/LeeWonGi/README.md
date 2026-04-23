@@ -26,5 +26,6 @@ KEV에 따라 이미 사고가 난 지점을 보기 보다는 cwe리스트에 �
 final_optimization_clean.png의 경우 붉은색 점 (Scatter Points)은 최적화 시뮬레이션 과정 중 특정 시점(50회 단위)에서 측정된 분석 필요 범위(Alerts)의 실제 값.
 붉은색 굵은 선 (Solid Line)은 최적화 추세선 (Trend Line)으로 개별 점들의 변동성을 보정하여 알고리즘이 전체적으로 어느 방향으로 수렴 하고 있는지를 보여주는 4차 다항식 추세선.
 
+
 <img width="695" height="995" alt="image" src="https://github.com/user-attachments/assets/2cb54a67-be48-48a8-8cf9-190ed3fbb27e" />
 이후 scan_report_simulated_real.json으로 만들어진 가중치로 테스트 해 볼 수 있도록 함.
