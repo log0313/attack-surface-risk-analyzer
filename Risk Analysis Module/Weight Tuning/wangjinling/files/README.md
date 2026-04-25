@@ -146,7 +146,7 @@ OpenSearch가 로컬에서 실행 중이어야 하며, `vulnerability_cve` 인�
 
 ```bash
 cd "Risk Analysis Module"
-python "Weight Tuning/WangJinling/epss_kev_gap_early_warning.py"
+python "Weight Tuning/WangJinling/files/epss_kev_gap_early_warning.py"
 ```
 
 ---
