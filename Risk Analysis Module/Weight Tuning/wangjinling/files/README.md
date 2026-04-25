@@ -1,16 +1,4 @@
-# EPSS-KEV 갭 기반 금융권 선제 대응 모델
-**EPSS-KEV Gap Based Early Warning Model**
-
----
-
-## 모델 이름
-
-**EPSS-KEV Gap Based Early Warning Model**
-EPSS-KEV 갭 기반 금융권 선제 대응 모델
-
----
-
-## 모델 목적
+## 목적
 
 금융권 인프라에서 **KEV 등재 전에 먼저 위험 신호를 포착**하여, 실제 공격 피해가 발생하기 전에 선제적으로 대응하는 것을 목적으로 합니다.
 
