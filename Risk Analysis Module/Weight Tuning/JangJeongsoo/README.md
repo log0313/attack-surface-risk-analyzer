@@ -23,7 +23,7 @@ CVSS score, EPSS score, PoC를 feature로 사용해 logistic regretion 기반으
 ### 가중치 산정식
 
 $$
-Score = (C_{1} \times CVSS_score) + (C_{2} \times EPSS_score) + (C_{3} \times PoC_{flag})
+Score = (C_{1} \times CVSS_{score}) + (C_{2} \times EPSS_{score}) + (C_{3} \times PoC_{flag})
 $$
 
 이를 logistic regression으로 사용시 'bias + 가중합(Score)'을 sigmoid함수에 넣고 0.05 x CWE_flag를 더합니다. 최종적인 형태는 다음과 같습니다.
