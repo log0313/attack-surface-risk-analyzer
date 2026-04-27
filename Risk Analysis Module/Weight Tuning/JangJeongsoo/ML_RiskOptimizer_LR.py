@@ -282,21 +282,52 @@ def print_final_report(result: dict):
     print(classification_report(result["y_test"], y_pred,
                                 target_names=["Non-KEV", "KEV"]))
 
+    # 1. 파이프라인에서 스케일러와 LR 모델 추출
+    scaler = result["pipeline"].named_steps["scaler"]
     lr_model = result["pipeline"].named_steps["lr"]
-    coef_raw = lr_model.coef_[0]
-    abs_sum  = np.abs(coef_raw).sum()
 
-    print("=" * 55)
-    print("🏆 [LR 계수] 피처별 영향력 (CWE 제외 후)")
-    print("=" * 55)
+    # 2. 스케일링된 계수와 Bias
+    coef_scaled = lr_model.coef_[0]
+    bias_scaled = lr_model.intercept_[0]
+
+    # 3. StandardScaler의 평균과 표준편차
+    means = scaler.mean_
+    stds = scaler.scale_
+
+    # 4. 역산(Unscaling)하여 원래 데이터(Raw) 기준의 계수와 Bias 계산
+    coef_raw = coef_scaled / stds
+    bias_raw = bias_scaled - np.sum((coef_scaled * means) / stds)
+
+    abs_sum = np.abs(coef_raw).sum()
+
+    print("=" * 60)
+    print("🏆 [스캐너 하드코딩용] 실제 데이터 기준 LR 계수 및 Bias")
+    print("=" * 60)
+    print(f"  [Bias (절편)] : {bias_raw:.4f}")
+    print("-" * 60)
+
     for feat, coef in zip(FEATURES, coef_raw):
-        pct   = abs(coef) / abs_sum * 100
+        pct = abs(coef) / abs_sum * 100
         arrow = "▲" if coef > 0 else "▼"
-        bar   = "■" * int(pct // 2)
+        bar = "■" * int(pct // 2)
         print(f"  {feat:12} {coef:>8.4f}  {pct:>5.1f}%  {arrow}")
         print(f"  {'':12} {bar}")
-    print(f"\n  [룰 기반] flag_cwe 해당 시 +{CONFIG['cwe_bonus']} 가산 (모델 외부)")
-    print("=" * 55)
+
+    print("-" * 60)
+    print(f"  [룰 기반 가산점] flag_cwe 해당 시 +{CONFIG['cwe_bonus']} (모델 외부)")
+    print("=" * 60)
+
+    # 스캐너에 그대로 복붙할 수 있는 파이썬 수식 생성
+    print("\n💡 [최종 스캐너 적용 수식 (Python)]")
+    formula = f"z = {bias_raw:.4f} "
+    for feat, coef in zip(FEATURES, coef_raw):
+        sign = "+" if coef >= 0 else "-"
+        formula += f"{sign} ({abs(coef):.4f} * {feat}) "
+
+    print(f"1. {formula}")
+    print(f"2. base_prob = 1 / (1 + np.exp(-z))  # Sigmoid 적용")
+    print(f"3. final_prob = np.clip(base_prob + ({CONFIG['cwe_bonus']} if flag_cwe else 0), 0, 1)")
+    print("=" * 60)
 
 
 # ══════════════════════════════════════════════════════════════
