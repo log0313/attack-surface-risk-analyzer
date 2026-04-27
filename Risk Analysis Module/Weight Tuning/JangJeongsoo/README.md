@@ -28,7 +28,7 @@ $$
 
 이를 logistic regression으로 사용시 'bias + 가중합(Score)'을 sigmoid함수에 넣고 0.05 x CWE_flag를 더합니다. 최종적인 형태는 다음과 같습니다.
 
-위협도 점수 = clip(sigmoid(b + 0.6677×CVSS + 1.6400×EPSS + 0.4788×PoC) + 0.05×CWE, 0, 1)
+위협도 점수 = clip(sigmoid(b + 0.2006×CVSS + 5.7912×EPSS + 1.0169×PoC) + 0.05×CWE, 0, 1)
 
 ## 학습 결과
 
