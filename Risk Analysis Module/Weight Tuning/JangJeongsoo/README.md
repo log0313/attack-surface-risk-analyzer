@@ -36,7 +36,17 @@ $$
 
 ![report](./lr_recall_optimized.png)
 
+---
 
+## 추가: 테스트용 파일(test_runner.py)
+
+- Local용 AssetScanner를 사용해 만든 scan_report_simulated.json파일을 기반으로 opensearch에서 size=1000으로 검색합니다.
+- 머신러닝으로 얻은 최적값을 사용해 위험도 점수를 계산합니다.
+- Logistic regression의 threshold값인 0.257을 기준으로 위험도를 나누었습니다.
+- in_kev값이 true인 경우 위험도를 100으로 오버라이드하여 최우선적으로 처리하도록 하였습니다.
+- 위험도 산정식상 나올 수 있는 점수는 78정도가 최대값입니다.
+
+![report](./test_run.png)
 
 
 
