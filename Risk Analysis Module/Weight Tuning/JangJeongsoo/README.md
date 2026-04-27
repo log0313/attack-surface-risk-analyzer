@@ -32,7 +32,7 @@ $$
 
 ## 학습 결과
 
-![terminal](./LR_result.png)
+![terminal](./lr_result.png)
 
 ![report](./lr_recall_optimized.png)
 
