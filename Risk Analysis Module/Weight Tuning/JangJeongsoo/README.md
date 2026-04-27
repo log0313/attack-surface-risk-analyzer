@@ -32,8 +32,6 @@ $$
 
 ## 학습 결과
 
-![_terminal](./LR_result.png)
-
 ![report](./lr_recall_optimized.png)
 
 
