@@ -36,9 +36,13 @@ $$
 학습시 kev weight(정답을 맞췄을 때 보상)를 10부터 10단위로 100까지 변경해가며 전체 데이터 학습 결과 성능의 차이는 거의 없는 것으로 나타났습니다.
 그 중 weight가 50일 때 전체 데이터 중 recall 90%에 해당하는 지점은 확률 0.243지점, Precision이 30% 이상이면서 Recall이 가장 높은 지점은 0.844로 나타났습니다. weight 50을 선정한 이유는 두 threshold의 위치가 직관적이라고 생각해서입니다.
 
+---
+## Validation.py
+
+Logistic regression을 통해 얻은 계수를 사용해 만든 위협도 점수를 사용합니다. DB에서 무작위로 2만 개의 샘플 데이터를 불러와 위협도 점수를 매기고 설정한 Threshold에 따라 분류하고 각종 수치들을 분석합니다.
+
 
 ---
-
 ## 추가: 테스트용 파일(test_runner.py)
 
 - Local용 AssetScanner를 사용해 만든 scan_report_simulated.json파일을 기반으로 opensearch에서 size=1000으로 검색합니다.
