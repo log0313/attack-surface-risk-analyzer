@@ -41,6 +41,9 @@ $$
 
 Logistic regression을 통해 얻은 계수를 사용해 만든 위협도 점수를 사용합니다. DB에서 무작위로 2만 개의 샘플 데이터를 불러와 위협도 점수를 매기고 설정한 Threshold에 따라 분류하고 각종 수치들을 분석합니다.
 
+![terminal](./validation_distribution.png)
+![terminal](./Validation_terminal.png)
+
 
 ---
 ## 추가: 테스트용 파일(test_runner.py)
