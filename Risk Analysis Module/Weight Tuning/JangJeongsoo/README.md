@@ -17,7 +17,7 @@ CVSS score, EPSS score, PoC를 feature로 사용해 logistic regression 기반�
 - cvss_score, epss_percentile, has_poc, cwe를 feature로 하여 logistic regression을 실행합니다.
 - Labelling은 in_kev 여부로 변경했습니다. 특정 CVE나 CWE를 기준으로 학습시 과적합의 가능성이 너무 높으며 검증의 타당성도 떨어지기 때문입니다.
 - 전체 CVE data를 가지고 하는 학습을 통해 최적화된 계수를 찾아냅니다.
-- recall(sample중 in_kev인 경우에 해당하는 응답중 True positive 응답의 비율)값이 0.9 이상을 갖도록 설정했습니다.
+- recall값이 0.9 이상을 갖도록 설정했습니다.
 
 ### 가중치 산정식
 
@@ -34,7 +34,7 @@ $$
 ![terminal](./LR_result.png)
 
 학습시 kev weight(정답을 맞췄을 때 보상)를 10부터 10단위로 100까지 변경해가며 전체 데이터 학습 결과 성능의 차이는 거의 없는 것으로 나타났습니다.
-그 중 weight가 50일 때 전체 데이터 중 recall 90%에 해당하는 지점은 확률 0.243지점, Precision이 30% 이상이면서 Recall이 가장 높은 지점은 0.844로 나타났습니다. weight 50을 선정한 이유는 두 threshold의 위치가 직관적이라고 생각해서입니다.
+그 중 weight가 50일 때 전체 데이터 중 recall 90%에 해당하는 지점은 확률 0.243지점이었으며, 이 임계선 이하의 확률을 가지고 있는 경우 수용 가능한 위협으로 분류했습니다. Precision이 30% 이상이면서 Recall이 가장 높은 지점은 0.844로 나타났고, 이 임계선 이상의 확률을 가지는 경우 고위험군(우선적으로 처리할 위협)으로 분류했습니다. weight 50을 선정한 이유는 두 threshold의 위치가 직관적이라고 생각해서입니다.
 
 ---
 ## Validation.py
