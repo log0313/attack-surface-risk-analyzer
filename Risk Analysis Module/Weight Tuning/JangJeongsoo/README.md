@@ -1,6 +1,6 @@
 # 보안 위협도 가중치 최적화 알고리즘
 
-CVSS score, EPSS score, PoC를 feature로 사용해 logistic regression 기반으로 최적화된 계수를 찾아냅니다. CWE는 따로 빼서 사용했습니다.
+CVSS score, EPSS score, PoC, CWE를 feature로 사용해 logistic regression 기반으로 최적화된 계수를 찾아냅니다.
 
 ---
 
