@@ -30,7 +30,7 @@ class AssetRiskAnalyzer:
         self.index_name = "vulnerability_cve"
 
     # ══════════════════════════════════════════════════════════════
-    # 2. ML 기반 위험도 계산 (추출된 계수 적용)
+    # 2. ML 기반 위험도 계산 (학습된 CWE 계수 포함)
     # ══════════════════════════════════════════════════════════════
     def calculate_ml_risk_score(self, cvss, epss, has_poc, cwes):
         base_cvss = float(cvss) if cvss is not None else 0.0
@@ -41,12 +41,12 @@ class AssetRiskAnalyzer:
         if isinstance(cwes, list) and any(cwe in BANK_CRITICAL_CWES for cwe in cwes):
             flag_cwe = 1
 
-        # Logistic Regression 공식
-        z = -7.8131 + (0.2006 * base_cvss) + (5.7912 * base_epss) + (1.0169 * flag_poc)
-        base_prob = 1 / (1 + np.exp(-z))
+        # 업데이트된 Logistic Regression 공식 (CWE가 수식 안으로 들어옴)
+        #z = -7.8119 + (0.1985 * base_cvss) + (5.7956 * base_epss) + (1.0100 * flag_poc) + (0.0649 * flag_cwe)
+        z = -5.9571 + (0.1744 * base_cvss) + (5.6841 * base_epss) + (0.7553 * flag_poc) + (0.2420 * flag_cwe)
 
-        # CWE 보너스 가산 및 1.0(100점) 초과 방지
-        final_prob = np.clip(base_prob + (0.05 if flag_cwe else 0), 0, 1)
+        # 외부 보정 없이 순수 Sigmoid 함수만 적용
+        final_prob = 1 / (1 + np.exp(-z))
 
         return round(final_prob * 100, 2)
 
@@ -178,10 +178,10 @@ class AssetRiskAnalyzer:
             if res['in_kev']:
                 alert = "☠️ (Emergency)"
                 emergency_cnt += 1
-            elif score >= 60.0:
+            elif score >= 84.4:
                 alert = "🚨 (Critical)"
                 critical_cnt += 1
-            elif score >= 25.7:
+            elif score >= 24.3:
                 alert = "⚠️ (High/Med)"
                 managed_cnt += 1
             else:
@@ -201,8 +201,8 @@ class AssetRiskAnalyzer:
         print("=" * 90)
         print(f"[*] 총 {len(results)}개의 취약점 매핑 및 AI 리스크 평가 완료.")
         print(f"  - ☠️ 즉각 조치 (KEV 100점)          : {emergency_cnt}건")
-        print(f"  - 🚨 긴급 패치 (60.0점 이상)        : {critical_cnt}건")
-        print(f"  - ⚠️ 잠재 위험 (ML 임계치 25.7 이상): {managed_cnt}건 (정기 패치 대상)")
+        print(f"  - 🚨 긴급 패치 (85.0점 이상)        : {critical_cnt}건")
+        print(f"  - ⚠️ 잠재 위험 (ML 임계치 73.3 이상): {managed_cnt}건 (정기 패치 대상)")
         print(f"  - ✅ 수용 가능 (안전함)             : {low_cnt}건")
         print("=" * 90)
 
