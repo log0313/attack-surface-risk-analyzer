@@ -14,21 +14,20 @@ CVSS score, EPSS score, PoC를 feature로 사용해 logistic regression 기반�
 
 ### Logistic Regression
 
-- cvss_score, epss_percentile, has_poc를 feature로 하여 logistic regression을 실행합니다.
-- cwe는 학습 결과 모델의 변수로 유의미한 차이를 내지 못했기 때문에 제외하고, 대신 최종 산정된 sigmoid에서 보정치로 추가했습니다.
+- cvss_score, epss_percentile, has_poc, cwe를 feature로 하여 logistic regression을 실행합니다.
 - Labelling은 in_kev 여부로 변경했습니다. 특정 CVE나 CWE를 기준으로 학습시 과적합의 가능성이 너무 높으며 검증의 타당성도 떨어지기 때문입니다.
-- 2만 개의 무작위 추출된 CVE sample data를 가지고 하는 학습을 1회로 하여, seed를 변경해가며 총 50회의 학습을 통해 최적화된 계수를 찾아냅니다.
+- 전체 CVE data를 가지고 하는 학습을 통해 최적화된 계수를 찾아냅니다.
 - recall(sample중 in_kev인 경우에 해당하는 응답중 True positive 응답의 비율)값이 0.9 이상을 갖도록 설정했습니다.
 
 ### 가중치 산정식
 
 $$
-Score = (C_{1} \times CVSS_{score}) + (C_{2} \times EPSS_{score}) + (C_{3} \times PoC_{flag})
+Score = (w_{1} \times CVSS_{score}) + (w_{2} \times EPSS_{score}) + (w_{3} \times PoC_{flag}) + (w_{4} \times CWE_{flag})
 $$
 
-이를 logistic regression으로 사용시 'bias + 가중합(Score)'을 sigmoid함수에 넣고 0.05 x CWE_flag를 더합니다. 최종적인 형태는 다음과 같습니다.
+이를 logistic regression으로 사용시 'bias + 가중합(Score)'을 sigmoid함수에 넣습니다. 최종적인 형태는 다음과 같습니다.
 
-위협도 점수 = sigmoid(-7.8131 + 0.2006×CVSS + 5.7912×EPSS + 1.0169×PoC) + 0.05×CWE
+위협도 점수 = sigmoid(-5.9571 + 0.1744×CVSS + 5.6841×EPSS + 0.7553,×PoC + 0.2420×CWE)
 
 ## 학습 결과
 
