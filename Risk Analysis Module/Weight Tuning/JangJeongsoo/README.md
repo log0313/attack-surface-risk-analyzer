@@ -29,7 +29,7 @@ $$
 
 위협도 점수 = sigmoid(-5.9571 + 0.1744×CVSS + 5.6841×EPSS + 0.7553,×PoC + 0.2420×CWE)
 
-## 학습 결과
+## 학습 결과(ML_Weight_Optimizer.py)
 
 ![terminal](./LR_result.png)
 
@@ -37,7 +37,7 @@ $$
 그 중 weight가 50일 때 전체 데이터 중 recall 90%에 해당하는 지점은 확률 0.243지점이었으며, 이 임계선 이하의 확률을 가지고 있는 경우 수용 가능한 위협으로 분류했습니다. Precision이 30% 이상이면서 Recall이 가장 높은 지점은 0.844로 나타났고, 이 임계선 이상의 확률을 가지는 경우 고위험군(우선적으로 처리할 위협)으로 분류했습니다. weight 50을 선정한 이유는 두 threshold의 위치가 직관적이라고 생각해서입니다.
 
 ---
-## Validation.py
+## 무작위 추출 검증 결과(Validation.py)
 
 Logistic regression을 통해 얻은 계수를 사용해 만든 위협도 점수를 사용합니다. DB에서 무작위로 2만 개의 샘플 데이터를 불러와 위협도 점수를 매기고 설정한 Threshold에 따라 분류하고 각종 수치들을 분석합니다.
 
@@ -46,7 +46,7 @@ Logistic regression을 통해 얻은 계수를 사용해 만든 위협도 점수
 
 
 ---
-## test_runner.py
+## 모의 환경 검증 결과(test_runner.py)
 
 - Local용 AssetScanner를 사용해 만든 scan_report_simulated.json파일을 기반으로 opensearch에서 size=1000으로 검색합니다.
 - 머신러닝으로 얻은 최적값을 사용해 위험도 점수를 계산합니다.
