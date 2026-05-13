@@ -6,8 +6,8 @@
 - 5. 위협을 제대로 분류했다는 기준이 뭔지 모르겠다. 설명이 부족하다
 
 ## 전반적인 개념 설명
-- bias와 sigmoid함수는 Logistic Regression의 특성입니다. 우선 간단하게 선형결합이라는 방식을 사용하기로 정했고, 그에 맞는 가중치 튜닝 방법 중 Logistic regression을 채택했다는 식으로 설명헤야 합니다.
-- 우리 모델은 4가지 Feature를 사용해서 Labelling은 KEV 등재 여부(전세계 실제 침해 사례)을 사용합니다. 따라서 어떤 CVE에 대해서 sigmoid까지 거친 값은 '해당 CVE가 KEV 등재된 위협일 확률'(통계적 악용 확률)을 의미합니다.(정확히 %에 대응되는 확률은 아니지만 비슷하게 받아들일 수 있습니다.)
+- bias와 sigmoid함수는 Logistic Regression의 특성입니다. 우선 간단하게 선형결합이라는 방식을 사용하기로 정했고, 그에 맞는 가중치 튜닝 방법 중 Logistic regression을 채택했다는 식으로 설명해야 합니다. (참고: https://wikidocs.net/22881)
+- 우리 모델은 4가지 Feature를 사용해서 Labelling은 KEV 등재 여부(전세계 실제 침해 사례)를 사용합니다. 따라서 어떤 CVE에 대해서 sigmoid까지 거친 값은 '해당 CVE가 KEV 등재된 위협일 확률'(통계적 악용 확률)을 의미합니다.(정확히 %에 대응되는 확률은 아니지만 비슷하게 받아들일 수 있습니다.)
 - $CVSS_{score}$은 0과 10사이의 점수, $EPSS_{score}$는 epss_percentile로, 0과 1 사이의 점수를 사용합니다. 나머지 가중치는 Flag로 binary값을 가지므로 weight끼리의 비교시 CVSS의 weight는 10배로 계산해야 합니다.
 
 ## 질문별 답변
