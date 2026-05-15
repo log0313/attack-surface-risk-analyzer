@@ -1,0 +1,15 @@
+{
+  "risk_summary": "CVE-2021-44228 (Log4Shell)은 localhost:8080의 apache log4j-core 2.14.1에서 식별된 KEV 등재 취약점으로, threat_score 가 100점으로 override 되어 Immediate 등급으로 분류되었습니다.",
+  "risk_reasons": [
+    "KEV 등재 취약점이므로 threat_score 가 100점으로 override 되었습니다.",
+    "CVSS 10.0, EPSS percentile 0.99 로 Logistic Regression 산식의 EPSS·CVSS 기여도가 가장 큽니다.",
+    "PoC 가 공개되어 있고, CWE-502 (Deserialization) 가 BANK_CRITICAL_CWES 에 포함됩니다."
+  ],
+  "recommended_actions": [
+    "log4j-core 2.17.1 이상으로 즉시 업그레이드하거나 JndiLookup 클래스 제거 등 공식 권고 임시 조치를 적용하십시오.",
+    "포트 8080 의 외부 노출 여부를 재점검하고 WAF 에서 JNDI/LDAP 페이로드 차단 룰을 적용하십시오.",
+    "최근 30일 액세스 로그에서 jndi:ldap:// 패턴이 포함된 요청이 있었는지 조사하십시오."
+  ],
+  "priority": "Immediate",
+  "report_text": "# AI 위험 분석 보고서\n\n- 대상 자산: localhost:8080 (apache:log4j-core:2.14.1)\n- 취약점: CVE-2021-44228 (Log4Shell)\n- 최종 위험 점수(threat_score): 100 (KEV override → Immediate)\n\n## 위험 원인\n- KEV 등재 취약점이므로 threat_score 가 100점으로 override 되었습니다.\n- CVSS 10.0, EPSS percentile 0.99 로 Logistic Regression 산식의 기여도가 매우 높습니다.\n- PoC 공개 및 CWE-502 (Deserialization) flag 활성.\n\n## 대응 방안\n- log4j-core 2.17.1 이상으로 즉시 업그레이드 또는 임시 조치 적용.\n- 포트 8080 외부 노출 재점검 및 WAF JNDI/LDAP 차단 룰 적용.\n- 최근 30일 로그에서 jndi 페이로드 포함 요청 조사.\n\n> 본 보고서는 조치 가이드 초안이며, 최종 보안 조치는 담당자 검토가 필요합니다."
+}

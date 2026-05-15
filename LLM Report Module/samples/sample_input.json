@@ -1,0 +1,16 @@
+{
+  "asset_id": "asset-001",
+  "domain": "localhost",
+  "ip": "127.0.0.1",
+  "port": 8080,
+  "service_name": "http",
+  "technology_stack": ["apache:log4j-core:2.14.1"],
+  "cve_id": "CVE-2021-44228",
+  "cvss_score": 10.0,
+  "epss_score": 0.97,
+  "epss_percentile": 0.99,
+  "kev_status": true,
+  "poc_status": true,
+  "cwe_id": ["CWE-502", "CWE-917"],
+  "language": "ko"
+}
